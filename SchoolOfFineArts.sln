@@ -5,6 +5,8 @@ VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolOfFineArts", "SchoolOfFineArts\SchoolOfFineArts.csproj", "{CA728CA6-A398-437D-B651-78EB76453CDF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolOfFineArtsModels", "SchoolOfFineArtsModels\SchoolOfFineArtsModels.csproj", "{E096C110-4272-45F9-8C09-BD03F90A683D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{CA728CA6-A398-437D-B651-78EB76453CDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA728CA6-A398-437D-B651-78EB76453CDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA728CA6-A398-437D-B651-78EB76453CDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E096C110-4272-45F9-8C09-BD03F90A683D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E096C110-4272-45F9-8C09-BD03F90A683D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E096C110-4272-45F9-8C09-BD03F90A683D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E096C110-4272-45F9-8C09-BD03F90A683D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
