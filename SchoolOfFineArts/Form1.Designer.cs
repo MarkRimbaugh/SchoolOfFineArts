@@ -35,7 +35,6 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.txtTeacherId = new System.Windows.Forms.TextBox();
             this.txtTeacherFirstName = new System.Windows.Forms.TextBox();
             this.txtTeacherLastName = new System.Windows.Forms.TextBox();
             this.txtStudentId = new System.Windows.Forms.TextBox();
@@ -46,6 +45,12 @@
             this.btnAddTeacher = new System.Windows.Forms.Button();
             this.btnAddStudent = new System.Windows.Forms.Button();
             this.dtStudentDateOfBirth = new System.Windows.Forms.DateTimePicker();
+            this.numTeacherId = new System.Windows.Forms.NumericUpDown();
+            this.dgvResults = new System.Windows.Forms.DataGridView();
+            this.txtTeacherAge = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.numTeacherId)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvResults)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -111,23 +116,16 @@
             this.label7.TabIndex = 6;
             this.label7.Text = "Date of Birth:";
             // 
-            // txtTeacherId
-            // 
-            this.txtTeacherId.Location = new System.Drawing.Point(86, 60);
-            this.txtTeacherId.Name = "txtTeacherId";
-            this.txtTeacherId.Size = new System.Drawing.Size(100, 23);
-            this.txtTeacherId.TabIndex = 7;
-            // 
             // txtTeacherFirstName
             // 
-            this.txtTeacherFirstName.Location = new System.Drawing.Point(86, 92);
+            this.txtTeacherFirstName.Location = new System.Drawing.Point(89, 92);
             this.txtTeacherFirstName.Name = "txtTeacherFirstName";
             this.txtTeacherFirstName.Size = new System.Drawing.Size(100, 23);
             this.txtTeacherFirstName.TabIndex = 8;
             // 
             // txtTeacherLastName
             // 
-            this.txtTeacherLastName.Location = new System.Drawing.Point(86, 124);
+            this.txtTeacherLastName.Location = new System.Drawing.Point(89, 124);
             this.txtTeacherLastName.Name = "txtTeacherLastName";
             this.txtTeacherLastName.Size = new System.Drawing.Size(100, 23);
             this.txtTeacherLastName.TabIndex = 9;
@@ -173,7 +171,7 @@
             // 
             // btnAddTeacher
             // 
-            this.btnAddTeacher.Location = new System.Drawing.Point(86, 197);
+            this.btnAddTeacher.Location = new System.Drawing.Point(86, 240);
             this.btnAddTeacher.Name = "btnAddTeacher";
             this.btnAddTeacher.Size = new System.Drawing.Size(100, 24);
             this.btnAddTeacher.TabIndex = 16;
@@ -183,7 +181,7 @@
             // 
             // btnAddStudent
             // 
-            this.btnAddStudent.Location = new System.Drawing.Point(476, 197);
+            this.btnAddStudent.Location = new System.Drawing.Point(476, 240);
             this.btnAddStudent.Name = "btnAddStudent";
             this.btnAddStudent.Size = new System.Drawing.Size(101, 23);
             this.btnAddStudent.TabIndex = 17;
@@ -197,11 +195,57 @@
             this.dtStudentDateOfBirth.Size = new System.Drawing.Size(200, 23);
             this.dtStudentDateOfBirth.TabIndex = 18;
             // 
+            // numTeacherId
+            // 
+            this.numTeacherId.Location = new System.Drawing.Point(86, 60);
+            this.numTeacherId.Maximum = new decimal(new int[] {
+            2147000000,
+            0,
+            0,
+            0});
+            this.numTeacherId.Name = "numTeacherId";
+            this.numTeacherId.Size = new System.Drawing.Size(120, 23);
+            this.numTeacherId.TabIndex = 19;
+            this.numTeacherId.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // dgvResults
+            // 
+            this.dgvResults.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvResults.Location = new System.Drawing.Point(14, 364);
+            this.dgvResults.Name = "dgvResults";
+            this.dgvResults.RowTemplate.Height = 25;
+            this.dgvResults.Size = new System.Drawing.Size(240, 150);
+            this.dgvResults.TabIndex = 20;
+            // 
+            // txtTeacherAge
+            // 
+            this.txtTeacherAge.Location = new System.Drawing.Point(89, 156);
+            this.txtTeacherAge.Name = "txtTeacherAge";
+            this.txtTeacherAge.Size = new System.Drawing.Size(100, 23);
+            this.txtTeacherAge.TabIndex = 22;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(55, 159);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(28, 15);
+            this.label11.TabIndex = 24;
+            this.label11.Text = "Age";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 584);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.txtTeacherAge);
+            this.Controls.Add(this.dgvResults);
+            this.Controls.Add(this.numTeacherId);
             this.Controls.Add(this.dtStudentDateOfBirth);
             this.Controls.Add(this.btnAddStudent);
             this.Controls.Add(this.btnAddTeacher);
@@ -212,7 +256,6 @@
             this.Controls.Add(this.txtStudentId);
             this.Controls.Add(this.txtTeacherLastName);
             this.Controls.Add(this.txtTeacherFirstName);
-            this.Controls.Add(this.txtTeacherId);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
@@ -222,6 +265,8 @@
             this.Controls.Add(this.label1);
             this.Name = "Form1";
             this.Text = "Form1";
+            ((System.ComponentModel.ISupportInitialize)(this.numTeacherId)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvResults)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -236,7 +281,6 @@
         private Label label5;
         private Label label6;
         private Label label7;
-        private TextBox txtTeacherId;
         private TextBox txtTeacherFirstName;
         private TextBox txtTeacherLastName;
         private TextBox txtStudentId;
@@ -247,5 +291,9 @@
         private Button btnAddTeacher;
         private Button btnAddStudent;
         private DateTimePicker dtStudentDateOfBirth;
+        private NumericUpDown numTeacherId;
+        private DataGridView dgvResults;
+        private TextBox txtTeacherAge;
+        private Label label11;
     }
 }
