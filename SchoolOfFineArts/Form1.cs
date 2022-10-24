@@ -28,12 +28,14 @@ namespace SchoolOfFineArts
             {
                 if (teacher.Id == teacher1.Id )
                 {
-                    MessageBox.Show("Teacher already exists");
+                    MessageBox.Show("Teacher ID already exists");
                     validId = false;
                 }
-                if (teacher.LastName == teacher1.LastName && teacher.FirstName == teacher1.FirstName && teacher.Age == teacher1.Age)
+                if (teacher.LastName.Equals(teacher1.LastName, StringComparison.OrdinalIgnoreCase)
+                    && teacher.FirstName.Equals(teacher1.FirstName, StringComparison.OrdinalIgnoreCase)
+                    && teacher.Age == teacher1.Age)
                 {
-                    MessageBox.Show("Teacher already exists");
+                    MessageBox.Show("This user already exists");
                     validId = false;
                 }
             }
