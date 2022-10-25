@@ -49,6 +49,7 @@
             this.dgvResults = new System.Windows.Forms.DataGridView();
             this.txtTeacherAge = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
+            this.btnLoadTeachers = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numTeacherId)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvResults)).BeginInit();
             this.SuspendLayout();
@@ -218,7 +219,7 @@
             this.dgvResults.Location = new System.Drawing.Point(14, 364);
             this.dgvResults.Name = "dgvResults";
             this.dgvResults.RowTemplate.Height = 25;
-            this.dgvResults.Size = new System.Drawing.Size(240, 150);
+            this.dgvResults.Size = new System.Drawing.Size(664, 150);
             this.dgvResults.TabIndex = 20;
             // 
             // txtTeacherAge
@@ -237,11 +238,22 @@
             this.label11.TabIndex = 24;
             this.label11.Text = "Age";
             // 
+            // btnLoadTeachers
+            // 
+            this.btnLoadTeachers.Location = new System.Drawing.Point(211, 240);
+            this.btnLoadTeachers.Name = "btnLoadTeachers";
+            this.btnLoadTeachers.Size = new System.Drawing.Size(100, 23);
+            this.btnLoadTeachers.TabIndex = 25;
+            this.btnLoadTeachers.Text = "Load Teachers";
+            this.btnLoadTeachers.UseVisualStyleBackColor = true;
+            this.btnLoadTeachers.Click += new System.EventHandler(this.btnLoadTeachers_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 584);
+            this.Controls.Add(this.btnLoadTeachers);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.txtTeacherAge);
             this.Controls.Add(this.dgvResults);
@@ -295,5 +307,6 @@
         private DataGridView dgvResults;
         private TextBox txtTeacherAge;
         private Label label11;
+        private Button btnLoadTeachers;
     }
 }

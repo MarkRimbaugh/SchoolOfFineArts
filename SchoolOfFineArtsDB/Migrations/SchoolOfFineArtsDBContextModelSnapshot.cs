@@ -44,7 +44,7 @@ namespace SchoolOfFineArtsDB.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Teachers");
+                    b.ToTable("Teachers", (string)null);
 
                     b.HasData(
                         new

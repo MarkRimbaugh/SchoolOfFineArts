@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using SchoolOfFineArtsDB;
 using SchoolOfFineArtsModels;
 using System.ComponentModel;
 
@@ -5,10 +7,16 @@ namespace SchoolOfFineArts
 {
     public partial class Form1 : Form
     {
+        //use readonly as they are only set at form creation
+        private readonly string _cnstr;
+        private readonly DbContextOptionsBuilder _optionsBuilder;
+
         public Form1()
         {
             InitializeComponent();
             dgvResults.DataSource = listTeachers;
+            _cnstr = Program._configuration["ConnectionStrings:SchoolOfFineArtsDB"];
+            _optionsBuilder = new DbContextOptionsBuilder<SchoolOfFineArtsDBContext>().UseSqlServer(_cnstr);
         }
 
         BindingList<Teacher> listTeachers = new BindingList<Teacher>();
@@ -31,7 +39,7 @@ namespace SchoolOfFineArts
                     MessageBox.Show("Teacher ID already exists");
                     validId = false;
                 }
-                if (teacher.LastName.Equals(teacher1.LastName, StringComparison.OrdinalIgnoreCase)
+                else if (teacher.LastName.Equals(teacher1.LastName, StringComparison.OrdinalIgnoreCase)
                     && teacher.FirstName.Equals(teacher1.FirstName, StringComparison.OrdinalIgnoreCase)
                     && teacher.Age == teacher1.Age)
                 {
@@ -42,6 +50,16 @@ namespace SchoolOfFineArts
             if (validId)
             {
                 listTeachers.Add(teacher1);
+                dgvResults.Refresh();
+            }
+        }
+
+        private void btnLoadTeachers_Click(object sender, EventArgs e)
+        {
+            using (var context = new SchoolOfFineArtsDBContext(_optionsBuilder.Options))
+            {
+                var dbTeachers = new BindingList<Teacher>(context.Teachers.ToList());
+                dgvResults.DataSource = dbTeachers;
                 dgvResults.Refresh();
             }
         }
