@@ -34,7 +34,7 @@
             this.lblDateOfBirth = new System.Windows.Forms.Label();
             this.txtFirstName = new System.Windows.Forms.TextBox();
             this.txtLastName = new System.Windows.Forms.TextBox();
-            this.btnAddTeacher = new System.Windows.Forms.Button();
+            this.btnAdd = new System.Windows.Forms.Button();
             this.dtDateOfBirth = new System.Windows.Forms.DateTimePicker();
             this.numId = new System.Windows.Forms.NumericUpDown();
             this.dgvResults = new System.Windows.Forms.DataGridView();
@@ -101,15 +101,15 @@
             this.txtLastName.Size = new System.Drawing.Size(100, 23);
             this.txtLastName.TabIndex = 3;
             // 
-            // btnAddTeacher
+            // btnAdd
             // 
-            this.btnAddTeacher.Location = new System.Drawing.Point(86, 240);
-            this.btnAddTeacher.Name = "btnAddTeacher";
-            this.btnAddTeacher.Size = new System.Drawing.Size(100, 24);
-            this.btnAddTeacher.TabIndex = 5;
-            this.btnAddTeacher.Text = "Add Teacher";
-            this.btnAddTeacher.UseVisualStyleBackColor = true;
-            this.btnAddTeacher.Click += new System.EventHandler(this.btnAddTeacher_Click);
+            this.btnAdd.Location = new System.Drawing.Point(118, 240);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(100, 24);
+            this.btnAdd.TabIndex = 5;
+            this.btnAdd.Text = "Add";
+            this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAddTeacher_Click);
             // 
             // dtDateOfBirth
             // 
@@ -147,7 +147,7 @@
             // 
             // numAge
             // 
-            this.numAge.Location = new System.Drawing.Point(121, 185);
+            this.numAge.Location = new System.Drawing.Point(121, 156);
             this.numAge.Name = "numAge";
             this.numAge.Size = new System.Drawing.Size(100, 23);
             this.numAge.TabIndex = 4;
@@ -163,7 +163,7 @@
             // 
             // btnLoadTeachers
             // 
-            this.btnLoadTeachers.Location = new System.Drawing.Point(211, 240);
+            this.btnLoadTeachers.Location = new System.Drawing.Point(224, 240);
             this.btnLoadTeachers.Name = "btnLoadTeachers";
             this.btnLoadTeachers.Size = new System.Drawing.Size(100, 23);
             this.btnLoadTeachers.TabIndex = 25;
@@ -199,14 +199,14 @@
             // 
             this.panel1.Controls.Add(this.rdoTeacher);
             this.panel1.Controls.Add(this.rdoStudent);
-            this.panel1.Location = new System.Drawing.Point(86, 287);
+            this.panel1.Location = new System.Drawing.Point(118, 287);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(168, 24);
             this.panel1.TabIndex = 28;
             // 
             // btnLoadStudents
             // 
-            this.btnLoadStudents.Location = new System.Drawing.Point(340, 240);
+            this.btnLoadStudents.Location = new System.Drawing.Point(330, 240);
             this.btnLoadStudents.Name = "btnLoadStudents";
             this.btnLoadStudents.Size = new System.Drawing.Size(100, 23);
             this.btnLoadStudents.TabIndex = 29;
@@ -227,7 +227,7 @@
             this.Controls.Add(this.dgvResults);
             this.Controls.Add(this.numId);
             this.Controls.Add(this.dtDateOfBirth);
-            this.Controls.Add(this.btnAddTeacher);
+            this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.txtLastName);
             this.Controls.Add(this.txtFirstName);
             this.Controls.Add(this.lblDateOfBirth);
@@ -253,7 +253,7 @@
         private Label lblDateOfBirth;
         private TextBox txtFirstName;
         private TextBox txtLastName;
-        private Button btnAddTeacher;
+        private Button btnAdd;
         private DateTimePicker dtDateOfBirth;
         private NumericUpDown numId;
         private DataGridView dgvResults;

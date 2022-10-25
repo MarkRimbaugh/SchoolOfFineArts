@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using SchoolOfFineArtsDB;
 using SchoolOfFineArtsModels;
 using System.ComponentModel;
@@ -23,39 +24,50 @@ namespace SchoolOfFineArts
 
         private void btnAddTeacher_Click(object sender, EventArgs e)
         {
-            Teacher teacher1 = new Teacher();
-            teacher1.FirstName = txtFirstName.Text;
-            teacher1.LastName = txtLastName.Text;
-            //teacher1.MiddleName = txtTeacherMiddleName.Text;
-            teacher1.Age = Convert.ToInt32(numAge.Text);
-            teacher1.Id = Convert.ToInt32(numId.Value);
-            //MessageBox.Show(teacher1.ToString());
+            bool newObject = true;
+            if (rdoTeacher.Checked)
+            {
+                var newTeacher = new Teacher();
+                newTeacher.Id = 0;
+                newTeacher.FirstName = txtFirstName.Text;
+                newTeacher.LastName = txtLastName.Text;
+                newTeacher.Age = Convert.ToInt32(numAge.Text);
+
+                //Ensure teacher not in database
+                using (var context = new SchoolOfFineArtsDBContext(_optionsBuilder.Options))
+                {
+                    var exists = context.Teachers.SingleOrDefault(teacher => teacher.FirstName.ToLower() == newTeacher.FirstName.ToLower()
+                                                                 && teacher.LastName.ToLower() == newTeacher.LastName.ToLower()
+                                                                 && teacher.Age == newTeacher.Age);
+                    //if exists post error "did you mean to update"
+                    if (exists is not null)
+                    {
+                        newObject = false;
+                        MessageBox.Show("Teacher already exists, did you mean to update?");
+                    }
+                    else
+                    {
+                        //if not add teacher
+                        context.Teachers.Add(newTeacher);
+                        context.SaveChanges();
+
+                        //reload teachers
+                        var dbTeachers = new BindingList<Teacher>(context.Teachers.ToList());
+                        dgvResults.DataSource = dbTeachers;
+                        dgvResults.Refresh();
+                    }
+                }
+            }
+            else if (rdoStudent.Checked)
+            {
+            }
 
             bool validId = true;
-            foreach (var teacher in listTeachers)
-            {
-                if (teacher.Id == teacher1.Id )
-                {
-                    MessageBox.Show("Teacher ID already exists");
-                    validId = false;
-                }
-                else if (teacher.LastName.Equals(teacher1.LastName, StringComparison.OrdinalIgnoreCase)
-                    && teacher.FirstName.Equals(teacher1.FirstName, StringComparison.OrdinalIgnoreCase)
-                    && teacher.Age == teacher1.Age)
-                {
-                    MessageBox.Show("This user already exists");
-                    validId = false;
-                }
-            }
-            if (validId)
-            {
-                listTeachers.Add(teacher1);
-                dgvResults.Refresh();
-            }
         }
 
         private void btnLoadTeachers_Click(object sender, EventArgs e)
         {
+            //take advantage of disposability of the connection and context:
             using (var context = new SchoolOfFineArtsDBContext(_optionsBuilder.Options))
             {
                 var dbTeachers = new BindingList<Teacher>(context.Teachers.ToList());
@@ -68,8 +80,6 @@ namespace SchoolOfFineArts
         {
             ToggleControlVisibility();
         }
-
-        
 
         private void rdoStudent_CheckedChanged(object sender, EventArgs e)
         {
