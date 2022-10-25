@@ -24,11 +24,11 @@ namespace SchoolOfFineArts
         private void btnAddTeacher_Click(object sender, EventArgs e)
         {
             Teacher teacher1 = new Teacher();
-            teacher1.FirstName = txtTeacherFirstName.Text;
-            teacher1.LastName = txtTeacherLastName.Text;
+            teacher1.FirstName = txtFirstName.Text;
+            teacher1.LastName = txtLastName.Text;
             //teacher1.MiddleName = txtTeacherMiddleName.Text;
-            teacher1.Age = Convert.ToInt32(txtTeacherAge.Text);
-            teacher1.Id = Convert.ToInt32(numTeacherId.Value);
+            teacher1.Age = Convert.ToInt32(numAge.Text);
+            teacher1.Id = Convert.ToInt32(numId.Value);
             //MessageBox.Show(teacher1.ToString());
 
             bool validId = true;
@@ -60,6 +60,36 @@ namespace SchoolOfFineArts
             {
                 var dbTeachers = new BindingList<Teacher>(context.Teachers.ToList());
                 dgvResults.DataSource = dbTeachers;
+                dgvResults.Refresh();
+            }
+        }
+
+        private void rdoTeacher_CheckedChanged(object sender, EventArgs e)
+        {
+            ToggleControlVisibility();
+        }
+
+        
+
+        private void rdoStudent_CheckedChanged(object sender, EventArgs e)
+        {
+            ToggleControlVisibility();
+        }
+
+        private void ToggleControlVisibility()
+        {
+            lblAge.Visible = rdoTeacher.Checked;
+            lblDateOfBirth.Visible = rdoStudent.Checked;
+            numAge.Visible = rdoTeacher.Checked;
+            dtDateOfBirth.Visible = rdoStudent.Checked;
+        }
+
+        private void btnLoadStudents_Click(object sender, EventArgs e)
+        {
+            using (var context = new SchoolOfFineArtsDBContext(_optionsBuilder.Options))
+            {
+                var dbStudents = new BindingList<Student>(context.Students.ToList());
+                dgvResults.DataSource = dbStudents;
                 dgvResults.Refresh();
             }
         }

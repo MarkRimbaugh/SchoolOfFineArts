@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SchoolOfFineArtsDB;
 
@@ -11,9 +12,10 @@ using SchoolOfFineArtsDB;
 namespace SchoolOfFineArtsDB.Migrations
 {
     [DbContext(typeof(SchoolOfFineArtsDBContext))]
-    partial class SchoolOfFineArtsDBContextModelSnapshot : ModelSnapshot
+    [Migration("20221025150342_Create-Student-Table")]
+    partial class CreateStudentTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,43 +48,6 @@ namespace SchoolOfFineArtsDB.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Students");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            DateOfBirth = new DateTime(1984, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "Greg",
-                            LastName = "John"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            DateOfBirth = new DateTime(1984, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "Erik",
-                            LastName = "Tabaka"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            DateOfBirth = new DateTime(1984, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "Josh",
-                            LastName = "Benson"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            DateOfBirth = new DateTime(1984, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "Alex",
-                            LastName = "Robinson"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            DateOfBirth = new DateTime(1984, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "Mark",
-                            LastName = "Rimbaugh"
-                        });
                 });
 
             modelBuilder.Entity("SchoolOfFineArtsModels.Teacher", b =>
