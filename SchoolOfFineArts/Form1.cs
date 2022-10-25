@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using SchoolOfFineArtsDB;
 using SchoolOfFineArtsModels;
 using System.ComponentModel;
+using System.Diagnostics;
 
 namespace SchoolOfFineArts
 {
@@ -22,7 +23,7 @@ namespace SchoolOfFineArts
 
         BindingList<Teacher> listTeachers = new BindingList<Teacher>();
 
-        private void btnAddTeacher_Click(object sender, EventArgs e)
+        private void btnAdd_Click(object sender, EventArgs e)
         {
             bool newObject = true;
             if (rdoTeacher.Checked)
@@ -60,6 +61,7 @@ namespace SchoolOfFineArts
             }
             else if (rdoStudent.Checked)
             {
+
             }
 
             bool validId = true;
@@ -72,6 +74,16 @@ namespace SchoolOfFineArts
             {
                 var dbTeachers = new BindingList<Teacher>(context.Teachers.ToList());
                 dgvResults.DataSource = dbTeachers;
+                dgvResults.Refresh();
+            }
+        }
+
+        private void btnLoadStudents_Click(object sender, EventArgs e)
+        {
+            using (var context = new SchoolOfFineArtsDBContext(_optionsBuilder.Options))
+            {
+                var dbStudents = new BindingList<Student>(context.Students.ToList());
+                dgvResults.DataSource = dbStudents;
                 dgvResults.Refresh();
             }
         }
@@ -94,12 +106,105 @@ namespace SchoolOfFineArts
             dtDateOfBirth.Visible = rdoStudent.Checked;
         }
 
-        private void btnLoadStudents_Click(object sender, EventArgs e)
+        private void dgvResults_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            var theRow = dgvResults.Rows[e.RowIndex];
+            //var theCell = theRow.Cells[0];
+            int dataId = 0;
+            bool isTeacher = false;
+            bool isStudent = false;
+
+            foreach (DataGridViewTextBoxCell cell in theRow.Cells)
+            {
+                Debug.WriteLine(cell.ColumnIndex);
+                Debug.WriteLine(cell.Value);
+                Debug.WriteLine(cell.OwningColumn.Name);
+
+                if (cell.OwningColumn.Name.Equals("Id", StringComparison.OrdinalIgnoreCase))
+                {
+                    dataId = (int)cell.Value;
+                }
+                if (cell.OwningColumn.Name.Equals("Age", StringComparison.OrdinalIgnoreCase))
+                {
+                    isTeacher = true;
+                }
+                if (cell.OwningColumn.Name.Equals("DateOfBirth", StringComparison.OrdinalIgnoreCase))
+                {
+                    isStudent = true;
+                }
+            }
+
             using (var context = new SchoolOfFineArtsDBContext(_optionsBuilder.Options))
             {
-                var dbStudents = new BindingList<Student>(context.Students.ToList());
-                dgvResults.DataSource = dbStudents;
+                if (isTeacher)
+                {
+                    var t = context.Teachers.SingleOrDefault(t => t.Id == dataId);
+                    if (t != null)
+                    {
+                        txtFirstName.Text = t.FirstName;
+                        txtLastName.Text = t.LastName;
+                        numAge.Value = t.Age;
+                        numId.Value = t.Id;
+
+                        rdoTeacher.Checked = true;
+                        rdoStudent.Checked = false;
+                        ToggleControlVisibility();
+                    }
+                }
+                else if (isStudent)
+                {
+                    var s = context.Students.SingleOrDefault(s => s.Id == dataId);
+                    if (s != null)
+                    {
+                        txtFirstName.Text = s.FirstName;
+                        txtLastName.Text = s.LastName;
+                        dtDateOfBirth.Value = s.DateOfBirth;
+                        numId.Value = s.Id;
+
+                        rdoTeacher.Checked = false;
+                        rdoStudent.Checked = true;
+                        ToggleControlVisibility();
+                    }
+                }
+            }
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            var Id = (int)numId.Value;
+            var confirmDelete = MessageBox.Show("Are you sure you want to delete this item?"
+                , "Are you sure?"
+                , MessageBoxButtons.YesNo);
+            if (confirmDelete == DialogResult.No)
+            {
+                return;
+            }
+            using (var context = new SchoolOfFineArtsDBContext(_optionsBuilder.Options))
+            {
+                if (rdoTeacher.Checked)
+                {
+                    var d = context.Teachers.SingleOrDefault(t => t.Id == Id);
+                    if (d != null)
+                    {
+                        context.Teachers.Remove(d);
+                        context.SaveChanges();
+                        var databaseTeachers = new BindingList<Teacher>(context.Teachers.ToList());
+                        dgvResults.DataSource = databaseTeachers;
+                    }
+                }
+
+                else if (rdoStudent.Checked)
+                {
+                    var d = context.Students.SingleOrDefault(s => s.Id == Id);
+                    if (d != null)
+                    {
+                        context.Students.Remove(d);
+                        context.SaveChanges();
+                        var databaseStudents = new BindingList<Student>(context.Students.ToList());
+                        dgvResults.DataSource = databaseStudents;
+                    }
+                }
+
                 dgvResults.Refresh();
             }
         }

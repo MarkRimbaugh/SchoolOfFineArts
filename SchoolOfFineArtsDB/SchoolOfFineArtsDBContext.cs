@@ -32,7 +32,7 @@ namespace SchoolOfFineArtsDB
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Teacher>(x =>
-            {
+            {                
                 x.HasData(
                     new Teacher() { Id = 1, FirstName = "Anne", LastName = "Sullivan", Age = 27 },
                     new Teacher() { Id = 2, FirstName = "Maria", LastName = "Montessori", Age = 32 },

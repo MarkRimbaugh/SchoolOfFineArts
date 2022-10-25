@@ -38,16 +38,18 @@
             this.dtDateOfBirth = new System.Windows.Forms.DateTimePicker();
             this.numId = new System.Windows.Forms.NumericUpDown();
             this.dgvResults = new System.Windows.Forms.DataGridView();
-            this.numAge = new System.Windows.Forms.TextBox();
             this.lblAge = new System.Windows.Forms.Label();
             this.btnLoadTeachers = new System.Windows.Forms.Button();
             this.rdoTeacher = new System.Windows.Forms.RadioButton();
             this.rdoStudent = new System.Windows.Forms.RadioButton();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnLoadStudents = new System.Windows.Forms.Button();
+            this.numAge = new System.Windows.Forms.NumericUpDown();
+            this.btnDelete = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numId)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvResults)).BeginInit();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numAge)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -103,13 +105,13 @@
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(118, 240);
+            this.btnAdd.Location = new System.Drawing.Point(118, 212);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(100, 24);
             this.btnAdd.TabIndex = 5;
             this.btnAdd.Text = "Add";
             this.btnAdd.UseVisualStyleBackColor = true;
-            this.btnAdd.Click += new System.EventHandler(this.btnAddTeacher_Click);
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // dtDateOfBirth
             // 
@@ -121,6 +123,7 @@
             // 
             // numId
             // 
+            this.numId.Enabled = false;
             this.numId.Location = new System.Drawing.Point(118, 60);
             this.numId.Maximum = new decimal(new int[] {
             2147000000,
@@ -128,6 +131,7 @@
             0,
             0});
             this.numId.Name = "numId";
+            this.numId.ReadOnly = true;
             this.numId.Size = new System.Drawing.Size(120, 23);
             this.numId.TabIndex = 1;
             this.numId.Value = new decimal(new int[] {
@@ -144,13 +148,7 @@
             this.dgvResults.RowTemplate.Height = 25;
             this.dgvResults.Size = new System.Drawing.Size(664, 150);
             this.dgvResults.TabIndex = 20;
-            // 
-            // numAge
-            // 
-            this.numAge.Location = new System.Drawing.Point(121, 156);
-            this.numAge.Name = "numAge";
-            this.numAge.Size = new System.Drawing.Size(100, 23);
-            this.numAge.TabIndex = 4;
+            this.dgvResults.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvResults_CellClick);
             // 
             // lblAge
             // 
@@ -163,7 +161,7 @@
             // 
             // btnLoadTeachers
             // 
-            this.btnLoadTeachers.Location = new System.Drawing.Point(224, 240);
+            this.btnLoadTeachers.Location = new System.Drawing.Point(224, 213);
             this.btnLoadTeachers.Name = "btnLoadTeachers";
             this.btnLoadTeachers.Size = new System.Drawing.Size(100, 23);
             this.btnLoadTeachers.TabIndex = 25;
@@ -206,7 +204,7 @@
             // 
             // btnLoadStudents
             // 
-            this.btnLoadStudents.Location = new System.Drawing.Point(330, 240);
+            this.btnLoadStudents.Location = new System.Drawing.Point(224, 242);
             this.btnLoadStudents.Name = "btnLoadStudents";
             this.btnLoadStudents.Size = new System.Drawing.Size(100, 23);
             this.btnLoadStudents.TabIndex = 29;
@@ -214,16 +212,34 @@
             this.btnLoadStudents.UseVisualStyleBackColor = true;
             this.btnLoadStudents.Click += new System.EventHandler(this.btnLoadStudents_Click);
             // 
+            // numAge
+            // 
+            this.numAge.Location = new System.Drawing.Point(121, 156);
+            this.numAge.Name = "numAge";
+            this.numAge.Size = new System.Drawing.Size(120, 23);
+            this.numAge.TabIndex = 30;
+            // 
+            // btnDelete
+            // 
+            this.btnDelete.Location = new System.Drawing.Point(121, 242);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(97, 23);
+            this.btnDelete.TabIndex = 31;
+            this.btnDelete.Text = "Delete";
+            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 584);
+            this.Controls.Add(this.btnDelete);
+            this.Controls.Add(this.numAge);
             this.Controls.Add(this.btnLoadStudents);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.btnLoadTeachers);
             this.Controls.Add(this.lblAge);
-            this.Controls.Add(this.numAge);
             this.Controls.Add(this.dgvResults);
             this.Controls.Add(this.numId);
             this.Controls.Add(this.dtDateOfBirth);
@@ -240,6 +256,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvResults)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numAge)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -257,12 +274,13 @@
         private DateTimePicker dtDateOfBirth;
         private NumericUpDown numId;
         private DataGridView dgvResults;
-        private TextBox numAge;
         private Label lblAge;
         private Button btnLoadTeachers;
         private RadioButton rdoTeacher;
         private RadioButton rdoStudent;
         private Panel panel1;
         private Button btnLoadStudents;
+        private NumericUpDown numAge;
+        private Button btnDelete;
     }
 }
