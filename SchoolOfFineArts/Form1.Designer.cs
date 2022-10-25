@@ -121,14 +121,14 @@
             this.txtTeacherFirstName.Location = new System.Drawing.Point(89, 92);
             this.txtTeacherFirstName.Name = "txtTeacherFirstName";
             this.txtTeacherFirstName.Size = new System.Drawing.Size(100, 23);
-            this.txtTeacherFirstName.TabIndex = 8;
+            this.txtTeacherFirstName.TabIndex = 2;
             // 
             // txtTeacherLastName
             // 
             this.txtTeacherLastName.Location = new System.Drawing.Point(89, 124);
             this.txtTeacherLastName.Name = "txtTeacherLastName";
             this.txtTeacherLastName.Size = new System.Drawing.Size(100, 23);
-            this.txtTeacherLastName.TabIndex = 9;
+            this.txtTeacherLastName.TabIndex = 3;
             // 
             // txtStudentId
             // 
@@ -174,7 +174,7 @@
             this.btnAddTeacher.Location = new System.Drawing.Point(86, 240);
             this.btnAddTeacher.Name = "btnAddTeacher";
             this.btnAddTeacher.Size = new System.Drawing.Size(100, 24);
-            this.btnAddTeacher.TabIndex = 16;
+            this.btnAddTeacher.TabIndex = 5;
             this.btnAddTeacher.Text = "Add Teacher";
             this.btnAddTeacher.UseVisualStyleBackColor = true;
             this.btnAddTeacher.Click += new System.EventHandler(this.btnAddTeacher_Click);
@@ -205,7 +205,7 @@
             0});
             this.numTeacherId.Name = "numTeacherId";
             this.numTeacherId.Size = new System.Drawing.Size(120, 23);
-            this.numTeacherId.TabIndex = 19;
+            this.numTeacherId.TabIndex = 1;
             this.numTeacherId.Value = new decimal(new int[] {
             1,
             0,
@@ -226,7 +226,7 @@
             this.txtTeacherAge.Location = new System.Drawing.Point(89, 156);
             this.txtTeacherAge.Name = "txtTeacherAge";
             this.txtTeacherAge.Size = new System.Drawing.Size(100, 23);
-            this.txtTeacherAge.TabIndex = 22;
+            this.txtTeacherAge.TabIndex = 4;
             // 
             // label11
             // 
