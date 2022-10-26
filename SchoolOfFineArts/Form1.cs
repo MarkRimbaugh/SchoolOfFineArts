@@ -23,13 +23,13 @@ namespace SchoolOfFineArts
 
         BindingList<Teacher> listTeachers = new BindingList<Teacher>();
 
-        private void btnAdd_Click(object sender, EventArgs e)
+        private void btnAddUpdate_Click(object sender, EventArgs e)
         {
-            bool newObject = true;
+            bool modified = false;
             if (rdoTeacher.Checked)
             {
                 var newTeacher = new Teacher();
-                newTeacher.Id = 0;
+                newTeacher.Id = Convert.ToInt32(numId.Value);
                 newTeacher.FirstName = txtFirstName.Text;
                 newTeacher.LastName = txtLastName.Text;
                 newTeacher.Age = Convert.ToInt32(numAge.Text);
@@ -37,22 +37,44 @@ namespace SchoolOfFineArts
                 //Ensure teacher not in database
                 using (var context = new SchoolOfFineArtsDBContext(_optionsBuilder.Options))
                 {
-                    var exists = context.Teachers.SingleOrDefault(teacher => teacher.FirstName.ToLower() == newTeacher.FirstName.ToLower()
-                                                                 && teacher.LastName.ToLower() == newTeacher.LastName.ToLower()
-                                                                 && teacher.Age == newTeacher.Age);
-                    //if exists post error "did you mean to update"
-                    if (exists is not null)
+                    if (newTeacher.Id > 0)
                     {
-                        newObject = false;
-                        MessageBox.Show("Teacher already exists, did you mean to update?");
+                        var existingTeacher = context.Teachers.SingleOrDefault(teacher => teacher.Id == newTeacher.Id);
+                        if (existingTeacher is not null)
+                        {
+                            //update
+                            existingTeacher.FirstName = newTeacher.FirstName;
+                            existingTeacher.LastName = newTeacher.LastName;
+                            existingTeacher.Age = newTeacher.Age;
+                            context.SaveChanges();
+                            modified = true;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Teacher not found, could not update.");
+                        }
                     }
                     else
                     {
+                        var existingTeacher = context.Teachers.SingleOrDefault(teacher => teacher.FirstName.ToLower() == newTeacher.FirstName.ToLower()
+                                                                 && teacher.LastName.ToLower() == newTeacher.LastName.ToLower()
+                                                                 && teacher.Age == newTeacher.Age);
                         //if not add teacher
-                        context.Teachers.Add(newTeacher);
-                        context.SaveChanges();
-
+                        if (existingTeacher == null)
+                        {
+                            context.Teachers.Add(newTeacher);
+                            context.SaveChanges();
+                            modified = true;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Teacher already exists, did you mean to update?");
+                        }
+                    }
+                    if (modified)
+                    {
                         //reload teachers
+                        ResetForm();
                         var dbTeachers = new BindingList<Teacher>(context.Teachers.ToList());
                         dgvResults.DataSource = dbTeachers;
                         dgvResults.Refresh();
@@ -65,6 +87,47 @@ namespace SchoolOfFineArts
             }
 
             bool validId = true;
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            var Id = (int)numId.Value;
+            var confirmDelete = MessageBox.Show("Are you sure you want to delete this item?"
+                , "Are you sure?"
+                , MessageBoxButtons.YesNo);
+            if (confirmDelete == DialogResult.No)
+            {
+                return;
+            }
+            using (var context = new SchoolOfFineArtsDBContext(_optionsBuilder.Options))
+            {
+                if (rdoTeacher.Checked)
+                {
+                    var d = context.Teachers.SingleOrDefault(t => t.Id == Id);
+                    if (d != null)
+                    {
+                        context.Teachers.Remove(d);
+                        context.SaveChanges();
+                        var databaseTeachers = new BindingList<Teacher>(context.Teachers.ToList());
+                        dgvResults.DataSource = databaseTeachers;
+                    }
+                }
+
+                else if (rdoStudent.Checked)
+                {
+                    var d = context.Students.SingleOrDefault(s => s.Id == Id);
+                    if (d != null)
+                    {
+                        context.Students.Remove(d);
+                        context.SaveChanges();
+                        var databaseStudents = new BindingList<Student>(context.Students.ToList());
+                        dgvResults.DataSource = databaseStudents;
+                    }
+                }
+
+                dgvResults.Refresh();
+                ResetForm();
+            }
         }
 
         private void btnLoadTeachers_Click(object sender, EventArgs e)
@@ -169,44 +232,19 @@ namespace SchoolOfFineArts
             }
         }
 
-        private void btnDelete_Click(object sender, EventArgs e)
+        private void btnResetForm_Click(object sender, EventArgs e)
         {
-            var Id = (int)numId.Value;
-            var confirmDelete = MessageBox.Show("Are you sure you want to delete this item?"
-                , "Are you sure?"
-                , MessageBoxButtons.YesNo);
-            if (confirmDelete == DialogResult.No)
-            {
-                return;
-            }
-            using (var context = new SchoolOfFineArtsDBContext(_optionsBuilder.Options))
-            {
-                if (rdoTeacher.Checked)
-                {
-                    var d = context.Teachers.SingleOrDefault(t => t.Id == Id);
-                    if (d != null)
-                    {
-                        context.Teachers.Remove(d);
-                        context.SaveChanges();
-                        var databaseTeachers = new BindingList<Teacher>(context.Teachers.ToList());
-                        dgvResults.DataSource = databaseTeachers;
-                    }
-                }
+            ResetForm();
+        }
 
-                else if (rdoStudent.Checked)
-                {
-                    var d = context.Students.SingleOrDefault(s => s.Id == Id);
-                    if (d != null)
-                    {
-                        context.Students.Remove(d);
-                        context.SaveChanges();
-                        var databaseStudents = new BindingList<Student>(context.Students.ToList());
-                        dgvResults.DataSource = databaseStudents;
-                    }
-                }
-
-                dgvResults.Refresh();
-            }
+        private void ResetForm()
+        {
+            numId.Value = 0;
+            txtFirstName.Text = string.Empty;
+            txtLastName.Text = string.Empty;
+            numAge.Value = 0;
+            dtDateOfBirth.Value = DateTime.Now;
+            dgvResults.ClearSelection();
         }
     }
 }

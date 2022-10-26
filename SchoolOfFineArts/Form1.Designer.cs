@@ -34,7 +34,7 @@
             this.lblDateOfBirth = new System.Windows.Forms.Label();
             this.txtFirstName = new System.Windows.Forms.TextBox();
             this.txtLastName = new System.Windows.Forms.TextBox();
-            this.btnAdd = new System.Windows.Forms.Button();
+            this.btnAddUpdate = new System.Windows.Forms.Button();
             this.dtDateOfBirth = new System.Windows.Forms.DateTimePicker();
             this.numId = new System.Windows.Forms.NumericUpDown();
             this.dgvResults = new System.Windows.Forms.DataGridView();
@@ -46,6 +46,7 @@
             this.btnLoadStudents = new System.Windows.Forms.Button();
             this.numAge = new System.Windows.Forms.NumericUpDown();
             this.btnDelete = new System.Windows.Forms.Button();
+            this.btnResetForm = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numId)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvResults)).BeginInit();
             this.panel1.SuspendLayout();
@@ -103,15 +104,15 @@
             this.txtLastName.Size = new System.Drawing.Size(100, 23);
             this.txtLastName.TabIndex = 3;
             // 
-            // btnAdd
+            // btnAddUpdate
             // 
-            this.btnAdd.Location = new System.Drawing.Point(118, 212);
-            this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(100, 24);
-            this.btnAdd.TabIndex = 5;
-            this.btnAdd.Text = "Add";
-            this.btnAdd.UseVisualStyleBackColor = true;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            this.btnAddUpdate.Location = new System.Drawing.Point(118, 212);
+            this.btnAddUpdate.Name = "btnAddUpdate";
+            this.btnAddUpdate.Size = new System.Drawing.Size(100, 24);
+            this.btnAddUpdate.TabIndex = 5;
+            this.btnAddUpdate.Text = "Add/Update";
+            this.btnAddUpdate.UseVisualStyleBackColor = true;
+            this.btnAddUpdate.Click += new System.EventHandler(this.btnAddUpdate_Click);
             // 
             // dtDateOfBirth
             // 
@@ -134,11 +135,6 @@
             this.numId.ReadOnly = true;
             this.numId.Size = new System.Drawing.Size(120, 23);
             this.numId.TabIndex = 1;
-            this.numId.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             // 
             // dgvResults
             // 
@@ -229,11 +225,22 @@
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
+            // btnResetForm
+            // 
+            this.btnResetForm.Location = new System.Drawing.Point(330, 213);
+            this.btnResetForm.Name = "btnResetForm";
+            this.btnResetForm.Size = new System.Drawing.Size(75, 23);
+            this.btnResetForm.TabIndex = 32;
+            this.btnResetForm.Text = "Reset";
+            this.btnResetForm.UseVisualStyleBackColor = true;
+            this.btnResetForm.Click += new System.EventHandler(this.btnResetForm_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 584);
+            this.Controls.Add(this.btnResetForm);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.numAge);
             this.Controls.Add(this.btnLoadStudents);
@@ -243,7 +250,7 @@
             this.Controls.Add(this.dgvResults);
             this.Controls.Add(this.numId);
             this.Controls.Add(this.dtDateOfBirth);
-            this.Controls.Add(this.btnAdd);
+            this.Controls.Add(this.btnAddUpdate);
             this.Controls.Add(this.txtLastName);
             this.Controls.Add(this.txtFirstName);
             this.Controls.Add(this.lblDateOfBirth);
@@ -270,7 +277,7 @@
         private Label lblDateOfBirth;
         private TextBox txtFirstName;
         private TextBox txtLastName;
-        private Button btnAdd;
+        private Button btnAddUpdate;
         private DateTimePicker dtDateOfBirth;
         private NumericUpDown numId;
         private DataGridView dgvResults;
@@ -282,5 +289,6 @@
         private Button btnLoadStudents;
         private NumericUpDown numAge;
         private Button btnDelete;
+        private Button btnResetForm;
     }
 }
