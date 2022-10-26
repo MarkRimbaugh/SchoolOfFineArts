@@ -83,7 +83,58 @@ namespace SchoolOfFineArts
             }
             else if (rdoStudent.Checked)
             {
+                var newStudent = new Student();
+                newStudent.Id = Convert.ToInt32(numId.Value);
+                newStudent.FirstName = txtFirstName.Text;
+                newStudent.LastName = txtLastName.Text;
+                newStudent.DateOfBirth = dtDateOfBirth.Value;
 
+                //Ensure Student not in database
+                using (var context = new SchoolOfFineArtsDBContext(_optionsBuilder.Options))
+                {
+                    if (newStudent.Id > 0)
+                    {
+                        var existingStudent = context.Students.SingleOrDefault(Student => Student.Id == newStudent.Id);
+                        if (existingStudent is not null)
+                        {
+                            //update
+                            existingStudent.FirstName = newStudent.FirstName;
+                            existingStudent.LastName = newStudent.LastName;
+                            existingStudent.DateOfBirth = newStudent.DateOfBirth;
+                            context.SaveChanges();
+                            modified = true;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Student not found, could not update.");
+                        }
+                    }
+                    else
+                    {
+                        var existingStudent = context.Students.SingleOrDefault(Student => Student.FirstName.ToLower() == newStudent.FirstName.ToLower()
+                                                                 && Student.LastName.ToLower() == newStudent.LastName.ToLower()
+                                                                 && Student.DateOfBirth == newStudent.DateOfBirth);
+                        //if not add Student
+                        if (existingStudent == null)
+                        {
+                            context.Students.Add(newStudent);
+                            context.SaveChanges();
+                            modified = true;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Student already exists, did you mean to update?");
+                        }
+                    }
+                    if (modified)
+                    {
+                        //reload Students
+                        ResetForm();
+                        var dbStudents = new BindingList<Student>(context.Students.ToList());
+                        dgvResults.DataSource = dbStudents;
+                        dgvResults.Refresh();
+                    }
+                }
             }
 
             bool validId = true;
@@ -111,6 +162,10 @@ namespace SchoolOfFineArts
                         var databaseTeachers = new BindingList<Teacher>(context.Teachers.ToList());
                         dgvResults.DataSource = databaseTeachers;
                     }
+                    else
+                    {
+                        MessageBox.Show("Teacher not found, couldn't delete.");
+                    }
                 }
 
                 else if (rdoStudent.Checked)
@@ -123,8 +178,11 @@ namespace SchoolOfFineArts
                         var databaseStudents = new BindingList<Student>(context.Students.ToList());
                         dgvResults.DataSource = databaseStudents;
                     }
+                    else
+                    {
+                        MessageBox.Show("Student not found, couldn't delete.");
+                    }
                 }
-
                 dgvResults.Refresh();
                 ResetForm();
             }
@@ -183,17 +241,25 @@ namespace SchoolOfFineArts
                 Debug.WriteLine(cell.Value);
                 Debug.WriteLine(cell.OwningColumn.Name);
 
+
                 if (cell.OwningColumn.Name.Equals("Id", StringComparison.OrdinalIgnoreCase))
                 {
                     dataId = (int)cell.Value;
+                    if (dataId == 0)
+                    {
+                        MessageBox.Show("Bad row clicked");
+                        ResetForm();
+                        return;
+                    }
                 }
                 if (cell.OwningColumn.Name.Equals("Age", StringComparison.OrdinalIgnoreCase))
                 {
-                    isTeacher = true;
+                      isTeacher = true;
+                        
                 }
                 if (cell.OwningColumn.Name.Equals("DateOfBirth", StringComparison.OrdinalIgnoreCase))
                 {
-                    isStudent = true;
+                      isStudent = true;
                 }
             }
 
@@ -245,6 +311,11 @@ namespace SchoolOfFineArts
             numAge.Value = 0;
             dtDateOfBirth.Value = DateTime.Now;
             dgvResults.ClearSelection();
+        }
+
+        private void dgvResults_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

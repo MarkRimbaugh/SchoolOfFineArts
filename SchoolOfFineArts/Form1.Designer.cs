@@ -145,6 +145,7 @@
             this.dgvResults.Size = new System.Drawing.Size(664, 150);
             this.dgvResults.TabIndex = 20;
             this.dgvResults.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvResults_CellClick);
+            this.dgvResults.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvResults_CellContentClick);
             // 
             // lblAge
             // 
