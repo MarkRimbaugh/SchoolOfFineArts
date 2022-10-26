@@ -47,6 +47,7 @@
             this.numAge = new System.Windows.Forms.NumericUpDown();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnResetForm = new System.Windows.Forms.Button();
+            this.btnSearch = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numId)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvResults)).BeginInit();
             this.panel1.SuspendLayout();
@@ -106,7 +107,7 @@
             // 
             // btnAddUpdate
             // 
-            this.btnAddUpdate.Location = new System.Drawing.Point(118, 212);
+            this.btnAddUpdate.Location = new System.Drawing.Point(48, 226);
             this.btnAddUpdate.Name = "btnAddUpdate";
             this.btnAddUpdate.Size = new System.Drawing.Size(100, 24);
             this.btnAddUpdate.TabIndex = 5;
@@ -139,10 +140,10 @@
             // dgvResults
             // 
             this.dgvResults.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvResults.Location = new System.Drawing.Point(14, 364);
+            this.dgvResults.Location = new System.Drawing.Point(329, 60);
             this.dgvResults.Name = "dgvResults";
             this.dgvResults.RowTemplate.Height = 25;
-            this.dgvResults.Size = new System.Drawing.Size(664, 150);
+            this.dgvResults.Size = new System.Drawing.Size(459, 266);
             this.dgvResults.TabIndex = 20;
             this.dgvResults.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvResults_CellClick);
             this.dgvResults.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvResults_CellContentClick);
@@ -158,19 +159,20 @@
             // 
             // btnLoadTeachers
             // 
-            this.btnLoadTeachers.Location = new System.Drawing.Point(224, 213);
+            this.btnLoadTeachers.Location = new System.Drawing.Point(571, 12);
             this.btnLoadTeachers.Name = "btnLoadTeachers";
             this.btnLoadTeachers.Size = new System.Drawing.Size(100, 23);
             this.btnLoadTeachers.TabIndex = 25;
             this.btnLoadTeachers.Text = "Load Teachers";
             this.btnLoadTeachers.UseVisualStyleBackColor = true;
+            this.btnLoadTeachers.Visible = false;
             this.btnLoadTeachers.Click += new System.EventHandler(this.btnLoadTeachers_Click);
             // 
             // rdoTeacher
             // 
             this.rdoTeacher.AutoSize = true;
             this.rdoTeacher.Checked = true;
-            this.rdoTeacher.Location = new System.Drawing.Point(3, 3);
+            this.rdoTeacher.Location = new System.Drawing.Point(17, 3);
             this.rdoTeacher.Name = "rdoTeacher";
             this.rdoTeacher.Size = new System.Drawing.Size(65, 19);
             this.rdoTeacher.TabIndex = 26;
@@ -182,7 +184,7 @@
             // rdoStudent
             // 
             this.rdoStudent.AutoSize = true;
-            this.rdoStudent.Location = new System.Drawing.Point(92, 3);
+            this.rdoStudent.Location = new System.Drawing.Point(119, 3);
             this.rdoStudent.Name = "rdoStudent";
             this.rdoStudent.Size = new System.Drawing.Size(66, 19);
             this.rdoStudent.TabIndex = 27;
@@ -194,19 +196,20 @@
             // 
             this.panel1.Controls.Add(this.rdoTeacher);
             this.panel1.Controls.Add(this.rdoStudent);
-            this.panel1.Location = new System.Drawing.Point(118, 287);
+            this.panel1.Location = new System.Drawing.Point(48, 198);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(168, 24);
+            this.panel1.Size = new System.Drawing.Size(203, 24);
             this.panel1.TabIndex = 28;
             // 
             // btnLoadStudents
             // 
-            this.btnLoadStudents.Location = new System.Drawing.Point(224, 242);
+            this.btnLoadStudents.Location = new System.Drawing.Point(674, 12);
             this.btnLoadStudents.Name = "btnLoadStudents";
             this.btnLoadStudents.Size = new System.Drawing.Size(100, 23);
             this.btnLoadStudents.TabIndex = 29;
             this.btnLoadStudents.Text = "Load Students";
             this.btnLoadStudents.UseVisualStyleBackColor = true;
+            this.btnLoadStudents.Visible = false;
             this.btnLoadStudents.Click += new System.EventHandler(this.btnLoadStudents_Click);
             // 
             // numAge
@@ -218,7 +221,7 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(121, 242);
+            this.btnDelete.Location = new System.Drawing.Point(154, 227);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(97, 23);
             this.btnDelete.TabIndex = 31;
@@ -228,19 +231,30 @@
             // 
             // btnResetForm
             // 
-            this.btnResetForm.Location = new System.Drawing.Point(330, 213);
+            this.btnResetForm.Location = new System.Drawing.Point(48, 303);
             this.btnResetForm.Name = "btnResetForm";
-            this.btnResetForm.Size = new System.Drawing.Size(75, 23);
+            this.btnResetForm.Size = new System.Drawing.Size(100, 23);
             this.btnResetForm.TabIndex = 32;
-            this.btnResetForm.Text = "Reset";
+            this.btnResetForm.Text = "Reset Form";
             this.btnResetForm.UseVisualStyleBackColor = true;
             this.btnResetForm.Click += new System.EventHandler(this.btnResetForm_Click);
+            // 
+            // btnSearch
+            // 
+            this.btnSearch.Location = new System.Drawing.Point(154, 303);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(100, 23);
+            this.btnSearch.TabIndex = 33;
+            this.btnSearch.Text = "Search";
+            this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 584);
+            this.ClientSize = new System.Drawing.Size(800, 423);
+            this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.btnResetForm);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.numAge);
@@ -260,6 +274,7 @@
             this.Controls.Add(this.label1);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numId)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvResults)).EndInit();
             this.panel1.ResumeLayout(false);
@@ -291,5 +306,6 @@
         private NumericUpDown numAge;
         private Button btnDelete;
         private Button btnResetForm;
+        private Button btnSearch;
     }
 }

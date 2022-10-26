@@ -87,7 +87,7 @@ namespace SchoolOfFineArts
                 newStudent.Id = Convert.ToInt32(numId.Value);
                 newStudent.FirstName = txtFirstName.Text;
                 newStudent.LastName = txtLastName.Text;
-                newStudent.DateOfBirth = dtDateOfBirth.Value;
+                newStudent.DateOfBirth = dtDateOfBirth.Value.Date;
 
                 //Ensure Student not in database
                 using (var context = new SchoolOfFineArtsDBContext(_optionsBuilder.Options))
@@ -190,7 +190,13 @@ namespace SchoolOfFineArts
 
         private void btnLoadTeachers_Click(object sender, EventArgs e)
         {
+            LoadTeachers();
+        }
+
+        private void LoadTeachers()
+        {
             //take advantage of disposability of the connection and context:
+            
             using (var context = new SchoolOfFineArtsDBContext(_optionsBuilder.Options))
             {
                 var dbTeachers = new BindingList<Teacher>(context.Teachers.ToList());
@@ -201,22 +207,38 @@ namespace SchoolOfFineArts
 
         private void btnLoadStudents_Click(object sender, EventArgs e)
         {
+            LoadStudents();
+        }
+
+        private void LoadStudents()
+        {
             using (var context = new SchoolOfFineArtsDBContext(_optionsBuilder.Options))
             {
                 var dbStudents = new BindingList<Student>(context.Students.ToList());
                 dgvResults.DataSource = dbStudents;
                 dgvResults.Refresh();
             }
+            
         }
 
         private void rdoTeacher_CheckedChanged(object sender, EventArgs e)
         {
             ToggleControlVisibility();
+            if (rdoTeacher.Checked)
+            {
+                LoadTeachers();
+                ResetForm();
+            }
         }
 
         private void rdoStudent_CheckedChanged(object sender, EventArgs e)
         {
             ToggleControlVisibility();
+            if (rdoStudent.Checked)
+            {
+                LoadStudents();
+                ResetForm();
+            }
         }
 
         private void ToggleControlVisibility()
@@ -315,6 +337,35 @@ namespace SchoolOfFineArts
 
         private void dgvResults_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            ResetForm();
+            LoadTeachers();
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            if (rdoTeacher.Checked)
+            {
+                LoadTeachers();
+                var teacherList = dgvResults.DataSource as BindingList<Teacher>;
+                var fList = teacherList.Where(x => x.LastName.ToLower().Contains(txtLastName.Text.ToLower()) &&
+                                              x.FirstName.ToLower().Contains(txtFirstName.Text.ToLower())).ToList();
+                dgvResults.DataSource = new BindingList<Teacher>(fList);
+                dgvResults.ClearSelection();
+            }
+            else if (rdoStudent.Checked)
+            {
+                LoadStudents();
+                var studentList = dgvResults.DataSource as BindingList<Student>;
+                var sList = studentList.Where(x => x.LastName.ToLower().Contains(txtLastName.Text.ToLower()) &&
+                                              x.FirstName.ToLower().Contains(txtFirstName.Text.ToLower())).ToList();
+                dgvResults.DataSource = new BindingList<Student>(sList);
+                dgvResults.ClearSelection();
+            }
 
         }
     }

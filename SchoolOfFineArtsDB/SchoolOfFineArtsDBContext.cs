@@ -15,6 +15,7 @@ namespace SchoolOfFineArtsDB
             : base(options) { }
 
         //add to allow migrations when the context is not built
+        
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -28,6 +29,7 @@ namespace SchoolOfFineArtsDB
                 optionsBuilder.UseSqlServer(cnstr);
             }
         }
+        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
