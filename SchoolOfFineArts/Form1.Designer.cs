@@ -51,6 +51,8 @@
             this.rdoStudent = new System.Windows.Forms.RadioButton();
             this.btnAddUpdate = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btnResetCourseForm = new System.Windows.Forms.Button();
+            this.dgvCourses = new System.Windows.Forms.DataGridView();
             this.cboNumCredits = new System.Windows.Forms.ComboBox();
             this.cboTeacher = new System.Windows.Forms.ComboBox();
             this.txtDepartment = new System.Windows.Forms.TextBox();
@@ -66,8 +68,6 @@
             this.btnRemoveCourse = new System.Windows.Forms.Button();
             this.btnLoadCourses = new System.Windows.Forms.Button();
             this.btnAddUpdateCourse = new System.Windows.Forms.Button();
-            this.dgvCourses = new System.Windows.Forms.DataGridView();
-            this.btnResetCourseForm = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvResults)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -84,10 +84,9 @@
             this.dgvResults.Location = new System.Drawing.Point(288, 9);
             this.dgvResults.Name = "dgvResults";
             this.dgvResults.RowTemplate.Height = 25;
-            this.dgvResults.Size = new System.Drawing.Size(459, 266);
+            this.dgvResults.Size = new System.Drawing.Size(588, 266);
             this.dgvResults.TabIndex = 20;
             this.dgvResults.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvResults_CellClick);
-            this.dgvResults.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvResults_CellContentClick);
             // 
             // btnLoadTeachers
             // 
@@ -118,8 +117,9 @@
             this.tabControl1.Location = new System.Drawing.Point(12, 30);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(762, 458);
+            this.tabControl1.Size = new System.Drawing.Size(908, 458);
             this.tabControl1.TabIndex = 34;
+            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
             // tabPage1
             // 
@@ -142,7 +142,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 24);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(754, 430);
+            this.tabPage1.Size = new System.Drawing.Size(900, 430);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Students and Teachers";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -198,7 +198,7 @@
             this.numAge.Location = new System.Drawing.Point(84, 118);
             this.numAge.Name = "numAge";
             this.numAge.Size = new System.Drawing.Size(120, 23);
-            this.numAge.TabIndex = 43;
+            this.numAge.TabIndex = 3;
             // 
             // numId
             // 
@@ -227,14 +227,14 @@
             this.txtLastName.Location = new System.Drawing.Point(84, 60);
             this.txtLastName.Name = "txtLastName";
             this.txtLastName.Size = new System.Drawing.Size(100, 23);
-            this.txtLastName.TabIndex = 36;
+            this.txtLastName.TabIndex = 1;
             // 
             // txtFirstName
             // 
             this.txtFirstName.Location = new System.Drawing.Point(84, 89);
             this.txtFirstName.Name = "txtFirstName";
             this.txtFirstName.Size = new System.Drawing.Size(100, 23);
-            this.txtFirstName.TabIndex = 35;
+            this.txtFirstName.TabIndex = 2;
             // 
             // btnSearch
             // 
@@ -244,6 +244,7 @@
             this.btnSearch.TabIndex = 42;
             this.btnSearch.Text = "Search";
             this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
             // btnResetForm
             // 
@@ -253,6 +254,7 @@
             this.btnResetForm.TabIndex = 41;
             this.btnResetForm.Text = "Reset Form";
             this.btnResetForm.UseVisualStyleBackColor = true;
+            this.btnResetForm.Click += new System.EventHandler(this.btnResetForm_Click);
             // 
             // btnDelete
             // 
@@ -262,6 +264,7 @@
             this.btnDelete.TabIndex = 40;
             this.btnDelete.Text = "Delete";
             this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // panel1
             // 
@@ -283,6 +286,7 @@
             this.rdoTeacher.TabStop = true;
             this.rdoTeacher.Text = "Teacher";
             this.rdoTeacher.UseVisualStyleBackColor = true;
+            this.rdoTeacher.Click += new System.EventHandler(this.rdoTeacher_CheckedChanged);
             // 
             // rdoStudent
             // 
@@ -293,6 +297,7 @@
             this.rdoStudent.TabIndex = 27;
             this.rdoStudent.Text = "Student";
             this.rdoStudent.UseVisualStyleBackColor = true;
+            this.rdoStudent.Click += new System.EventHandler(this.rdoStudent_CheckedChanged);
             // 
             // btnAddUpdate
             // 
@@ -302,6 +307,7 @@
             this.btnAddUpdate.TabIndex = 37;
             this.btnAddUpdate.Text = "Add/Update";
             this.btnAddUpdate.UseVisualStyleBackColor = true;
+            this.btnAddUpdate.Click += new System.EventHandler(this.btnAddUpdate_Click);
             // 
             // tabPage2
             // 
@@ -325,10 +331,31 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 24);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(754, 430);
+            this.tabPage2.Size = new System.Drawing.Size(900, 430);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Courses";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // btnResetCourseForm
+            // 
+            this.btnResetCourseForm.Location = new System.Drawing.Point(74, 350);
+            this.btnResetCourseForm.Name = "btnResetCourseForm";
+            this.btnResetCourseForm.Size = new System.Drawing.Size(131, 23);
+            this.btnResetCourseForm.TabIndex = 17;
+            this.btnResetCourseForm.Text = "Reset Course Form";
+            this.btnResetCourseForm.UseVisualStyleBackColor = true;
+            this.btnResetCourseForm.Click += new System.EventHandler(this.btnResetCourseForm_Click);
+            // 
+            // dgvCourses
+            // 
+            this.dgvCourses.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvCourses.Location = new System.Drawing.Point(246, 37);
+            this.dgvCourses.Name = "dgvCourses";
+            this.dgvCourses.RowTemplate.Height = 25;
+            this.dgvCourses.Size = new System.Drawing.Size(648, 336);
+            this.dgvCourses.TabIndex = 16;
+            this.dgvCourses.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCourses_CellClick);
+            this.dgvCourses.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCourses_CellClick);
             // 
             // cboNumCredits
             // 
@@ -445,6 +472,7 @@
             this.btnRemoveCourse.TabIndex = 2;
             this.btnRemoveCourse.Text = "Remove Course";
             this.btnRemoveCourse.UseVisualStyleBackColor = true;
+            this.btnRemoveCourse.Click += new System.EventHandler(this.btnRemoveCourse_Click);
             // 
             // btnLoadCourses
             // 
@@ -454,6 +482,7 @@
             this.btnLoadCourses.TabIndex = 1;
             this.btnLoadCourses.Text = "Load Courses";
             this.btnLoadCourses.UseVisualStyleBackColor = true;
+            this.btnLoadCourses.Click += new System.EventHandler(this.btnLoadCourses_Click);
             // 
             // btnAddUpdateCourse
             // 
@@ -463,30 +492,13 @@
             this.btnAddUpdateCourse.TabIndex = 0;
             this.btnAddUpdateCourse.Text = "Add/Update";
             this.btnAddUpdateCourse.UseVisualStyleBackColor = true;
-            // 
-            // dgvCourses
-            // 
-            this.dgvCourses.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvCourses.Location = new System.Drawing.Point(305, 37);
-            this.dgvCourses.Name = "dgvCourses";
-            this.dgvCourses.RowTemplate.Height = 25;
-            this.dgvCourses.Size = new System.Drawing.Size(422, 336);
-            this.dgvCourses.TabIndex = 16;
-            // 
-            // btnResetCourseForm
-            // 
-            this.btnResetCourseForm.Location = new System.Drawing.Point(74, 350);
-            this.btnResetCourseForm.Name = "btnResetCourseForm";
-            this.btnResetCourseForm.Size = new System.Drawing.Size(131, 23);
-            this.btnResetCourseForm.TabIndex = 17;
-            this.btnResetCourseForm.Text = "Reset Course Form";
-            this.btnResetCourseForm.UseVisualStyleBackColor = true;
+            this.btnAddUpdateCourse.Click += new System.EventHandler(this.btnAddUpdateCourse_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 756);
+            this.ClientSize = new System.Drawing.Size(1001, 756);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.btnLoadStudents);
             this.Controls.Add(this.btnLoadTeachers);

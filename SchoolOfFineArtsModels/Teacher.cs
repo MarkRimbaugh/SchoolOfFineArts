@@ -12,6 +12,7 @@ namespace SchoolOfFineArtsModels
         public string LastName { get; set; }
         [Required, Range(1,130)]
         public int Age { get; set; }
+        public string FriendlyName => $"{FirstName} {LastName}";
 
         public virtual List<Course> Courses { get; set; } = new List<Course>();
 
