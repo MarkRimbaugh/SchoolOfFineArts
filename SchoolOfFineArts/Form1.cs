@@ -390,6 +390,7 @@ namespace SchoolOfFineArts
             newCourse.NumCredits = Convert.ToInt32(cboNumCredits.SelectedItem);
             newCourse.TeacherId = teacherId;
 
+
             //Ensure course not in database
             if (newCourse.Id > 0)
             {
@@ -417,7 +418,7 @@ namespace SchoolOfFineArts
             {
                 using (var context = new SchoolOfFineArtsDBContext(_optionsBuilder.Options))
                 {
-                    var existingCourse = context.Courses.SingleOrDefault(course => newCourse.Name.ToLower() == newCourse.Name.ToLower()
+                    var existingCourse = context.Courses.SingleOrDefault(course => course.Name.ToLower() == newCourse.Name.ToLower()
                                                          && course.Abbreviation.ToLower() == newCourse.Abbreviation.ToLower()
                                                          && course.TeacherId == newCourse.TeacherId);
                     //if not add course
@@ -433,18 +434,18 @@ namespace SchoolOfFineArts
                     }
                 }
             }
-                if (modified)
-                {
-                    //reload courses
-                LoadCourses();
-                ResetCourseForm();
+            if (modified)
+            {
+                //reload courses
+            LoadCourses();
+            ResetCourseForm();
                     
 
 
-                    /*var dbCourses = new BindingList<course>(context.courses.ToList());
-                    dgvResults.DataSource = dbcourses;
-                    dgvResults.Refresh();*/
-                }
+                /*var dbCourses = new BindingList<course>(context.courses.ToList());
+                dgvResults.DataSource = dbcourses;
+                dgvResults.Refresh();*/
+            }
             }
         
 
@@ -545,7 +546,7 @@ namespace SchoolOfFineArts
                     if (dataId == 0)
                     {
                         MessageBox.Show("Bad row clicked");
-                        ResetForm();
+                        ResetCourseForm();
                         return;
                     }
                 }
