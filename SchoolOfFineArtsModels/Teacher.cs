@@ -10,11 +10,10 @@ namespace SchoolOfFineArtsModels
         public string FirstName { get; set; }
         [StringLength(50)]
         public string LastName { get; set; }
-        //public string MiddleName { get; set; }
         [Required, Range(1,130)]
         public int Age { get; set; }
 
-        // Override = to take in an object and compare
+        public virtual List<Course> Courses { get; set; } = new List<Course>();
 
         public override string ToString()
         {

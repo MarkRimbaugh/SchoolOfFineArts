@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SchoolOfFineArtsDB;
 
@@ -11,9 +12,10 @@ using SchoolOfFineArtsDB;
 namespace SchoolOfFineArtsDB.Migrations
 {
     [DbContext(typeof(SchoolOfFineArtsDBContext))]
-    partial class SchoolOfFineArtsDBContextModelSnapshot : ModelSnapshot
+    [Migration("20221027140553_create-courses-table")]
+    partial class createcoursestable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,30 +57,7 @@ namespace SchoolOfFineArtsDB.Migrations
 
                     b.HasIndex("TeacherId");
 
-                    b.ToTable("Courses");
-                });
-
-            modelBuilder.Entity("SchoolOfFineArtsModels.CourseEnrollment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("CourseId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourseId");
-
-                    b.HasIndex("StudentId");
-
-                    b.ToTable("CourseEnrollment");
+                    b.ToTable("Course");
                 });
 
             modelBuilder.Entity("SchoolOfFineArtsModels.Student", b =>
@@ -209,40 +188,13 @@ namespace SchoolOfFineArtsDB.Migrations
 
             modelBuilder.Entity("SchoolOfFineArtsModels.Course", b =>
                 {
-                    b.HasOne("SchoolOfFineArtsModels.Teacher", null)
+                    b.HasOne("SchoolOfFineArtsModels.Teacher", "Teacher")
                         .WithMany("Courses")
                         .HasForeignKey("TeacherId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
 
-            modelBuilder.Entity("SchoolOfFineArtsModels.CourseEnrollment", b =>
-                {
-                    b.HasOne("SchoolOfFineArtsModels.Course", "Course")
-                        .WithMany("CourseEnrollments")
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SchoolOfFineArtsModels.Student", "Student")
-                        .WithMany("CourseEnrollments")
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Course");
-
-                    b.Navigation("Student");
-                });
-
-            modelBuilder.Entity("SchoolOfFineArtsModels.Course", b =>
-                {
-                    b.Navigation("CourseEnrollments");
-                });
-
-            modelBuilder.Entity("SchoolOfFineArtsModels.Student", b =>
-                {
-                    b.Navigation("CourseEnrollments");
+                    b.Navigation("Teacher");
                 });
 
             modelBuilder.Entity("SchoolOfFineArtsModels.Teacher", b =>

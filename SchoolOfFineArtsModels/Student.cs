@@ -17,5 +17,7 @@ namespace SchoolOfFineArtsModels
         public string FirstName { get; set; }
         [Required]
         public DateTime DateOfBirth { get; set; }
+
+        public virtual List<CourseEnrollment> CourseEnrollments { get; set; }
     }
 }
