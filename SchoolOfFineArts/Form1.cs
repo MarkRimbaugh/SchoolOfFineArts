@@ -493,11 +493,12 @@ namespace SchoolOfFineArts
         private void ResetCourseForm()
         {
             lblCourseId.Text = "0";
-            cboNumCredits.SelectedIndex = 2;
+            cboNumCredits.SelectedIndex = -1;
             cboTeacher.SelectedIndex = -1;
             txtAbbreviation.Text = string.Empty;
             txtCourseName.Text = string.Empty;
             txtCourseName.Text = string.Empty;
+            txtDepartment.Text = string.Empty;
             LoadCourses();
         }
 
