@@ -437,25 +437,29 @@ namespace SchoolOfFineArts
             if (modified)
             {
                 //reload courses
-            LoadCourses();
-            ResetCourseForm();
-                    
-
-
-                /*var dbCourses = new BindingList<course>(context.courses.ToList());
-                dgvResults.DataSource = dbcourses;
-                dgvResults.Refresh();*/
+                LoadCourses();
+                ResetCourseForm();
             }
-            }
+        }
         
 
         private void LoadCourses()
         {
             using (var context = new SchoolOfFineArtsDBContext(_optionsBuilder.Options))
             {
-                var dbCourses = new BindingList<Course>(context.Courses.ToList());
+                var dbCourses = new BindingList<Course>(context.Courses.Include(x => x.Teacher).ToList());
+                /*var dbCourses = context.Courses.Include(x => x.Teacher).Select(y => new
+                                                                        {
+                                                                            Id = y.Id,
+                                                                            Name = y.Name,
+                                                                            Abbreviation = y.Abbreviation,
+                                                                            TeacherId = y.TeacherId,
+                                                                            TeacherName = $"{y.Teacher.FirstName} {y.Teacher.LastName}"
+                                                                        });
+                dgvCourses.DataSource = dbCourses.ToList();*/
                 dgvCourses.DataSource = dbCourses;
                 dgvCourses.Refresh();
+                
             }
         }
 
@@ -488,12 +492,14 @@ namespace SchoolOfFineArts
                     MessageBox.Show("Teacher not found, couldn't delete.");
                 }
             }
+            dgvCourses.Refresh();
+            ResetCourseForm();
         }
 
         private void ResetCourseForm()
         {
             lblCourseId.Text = "0";
-            cboNumCredits.SelectedIndex = -1;
+            cboNumCredits.SelectedIndex = 2;
             cboTeacher.SelectedIndex = -1;
             txtAbbreviation.Text = string.Empty;
             txtCourseName.Text = string.Empty;
@@ -534,6 +540,7 @@ namespace SchoolOfFineArts
             bool isTeacher = false;
             bool isStudent = false;
 
+            
             foreach (DataGridViewTextBoxCell cell in theRow.Cells)
             {
                 Debug.WriteLine(cell.ColumnIndex);
@@ -578,6 +585,7 @@ namespace SchoolOfFineArts
                         }
                     }
                 }
+                
             }
         }
     }

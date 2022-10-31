@@ -15,14 +15,15 @@ namespace SchoolOfFineArtsModels
         public string Name { get; set; }
         [Required, StringLength(50)]
         public string Abbreviation { get; set; }
-        [Required, StringLength(50)] 
+        [Required, StringLength(50)]
         public string Department { get; set; }
         [Required]
         public int NumCredits { get; set; }
         [Required]
         public int TeacherId { get; set; }
-        
-        public virtual List<CourseEnrollment> CourseEnrollments{ get; set; }
 
+        public virtual Teacher Teacher {get; set;}
+
+        public virtual List<CourseEnrollment> CourseEnrollments{ get; set; }
     }
 }
