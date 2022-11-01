@@ -4,6 +4,7 @@ using SchoolOfFineArtsDB;
 using SchoolOfFineArtsModels;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Text;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace SchoolOfFineArts
@@ -231,6 +232,10 @@ namespace SchoolOfFineArts
                 var dbStudents = new BindingList<Student>(context.Students.ToList());
                 dgvResults.DataSource = dbStudents;
                 dgvResults.Refresh();
+
+                lstStudents.Items.Clear();
+                lstStudents.Items.AddRange(dbStudents.ToArray());
+
             }
 
         }
@@ -265,6 +270,20 @@ namespace SchoolOfFineArts
 
         private void dgvResults_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            try
+            {
+                if (e.RowIndex < 0)
+                {
+                    MessageBox.Show("Bad row clicked");
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Bad row clicked");
+                return;
+            }
+
             var theRow = dgvResults.Rows[e.RowIndex];
             //var theCell = theRow.Cells[0];
             int dataId = 0;
@@ -351,9 +370,11 @@ namespace SchoolOfFineArts
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            LoadStudents();
+            LoadCourses();
+            LoadTeachers();
             ResetForm();
             ResetCourseForm();
-            LoadTeachers();
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
@@ -441,7 +462,7 @@ namespace SchoolOfFineArts
                 ResetCourseForm();
             }
         }
-        
+
 
         private void LoadCourses()
         {
@@ -449,17 +470,18 @@ namespace SchoolOfFineArts
             {
                 var dbCourses = new BindingList<Course>(context.Courses.Include(x => x.Teacher).ToList());
                 /*var dbCourses = context.Courses.Include(x => x.Teacher).Select(y => new
-                                                                        {
-                                                                            Id = y.Id,
-                                                                            Name = y.Name,
-                                                                            Abbreviation = y.Abbreviation,
-                                                                            TeacherId = y.TeacherId,
-                                                                            TeacherName = $"{y.Teacher.FirstName} {y.Teacher.LastName}"
-                                                                        });
-                dgvCourses.DataSource = dbCourses.ToList();*/
+                {
+                    Id = y.Id,
+                    Name = y.Name,
+                    Abbreviation = y.Abbreviation,
+                    TeacherId = y.TeacherId,
+                    TeacherName = $"{y.Teacher.FirstName} {y.Teacher.LastName}"
+                });*/
+                //dgvCourses.DataSource = dbCourses.ToList();
                 dgvCourses.DataSource = dbCourses;
                 dgvCourses.Refresh();
-                
+                dgvCourseAssignments.DataSource = dbCourses.ToList();
+                dgvCourseAssignments.Refresh();
             }
         }
 
@@ -525,22 +547,35 @@ namespace SchoolOfFineArts
                     LoadCourses();
                     break;
                 case 2:
-                    MessageBox.Show("Index 2");
+                    LoadCourses();
                     break;
                 default:
                     break;
-
             }
         }
 
         private void dgvCourses_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            try
+            {
+                if (e.RowIndex < 0)
+                {
+                    MessageBox.Show("Bad row clicked");
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Bad row clicked");
+                return;
+            }
+
             var theRow = dgvCourses.Rows[e.RowIndex];
             int dataId = 0;
             bool isTeacher = false;
             bool isStudent = false;
 
-            
+
             foreach (DataGridViewTextBoxCell cell in theRow.Cells)
             {
                 Debug.WriteLine(cell.ColumnIndex);
@@ -585,10 +620,217 @@ namespace SchoolOfFineArts
                         }
                     }
                 }
-                
             }
         }
-    }
+
+        private void dgvCourseAssignments_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                if (e.RowIndex < 0)
+                {
+                    MessageBox.Show("Bad row clicked");
+                    ResetCourseInfo();
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Bad row clicked");
+                ResetCourseInfo();
+                return;
+            }
+            var theRow = dgvCourseAssignments.Rows[e.RowIndex];
+            var dataId = 0;
+
+            foreach (DataGridViewTextBoxCell cell in theRow.Cells)
+            {
+                if (cell.OwningColumn.Name.Equals("Id", StringComparison.OrdinalIgnoreCase))
+                {
+                    dataId = (int)cell.Value;
+                    if (dataId == 0)
+                    {
+                        MessageBox.Show("Bad row clicked");
+                        ResetCourseInfo();
+                        return;
+                    }
+                    lblSelectedCourseId.Text = dataId.ToString();
+                }
+                if (cell.OwningColumn.Name.Equals("Name", StringComparison.OrdinalIgnoreCase))
+                {
+                    txtSelectedCourseName.Text = $"{cell.Value}";
+                }
+                if (cell.OwningColumn.Name.Equals("Name", StringComparison.OrdinalIgnoreCase))
+                {
+                    txtSelectedCourseName.Text = $"{cell.Value}";
+                }
+            }
+        }
+        private void ResetCourseAssignmentForm()
+        {
+            ResetCourseInfo();
+            ClearStudentSelections();
+        }
+
+        private void ResetCourseInfo()
+        {
+            dgvCourseAssignments.ClearSelection();
+            lblCourseId.Text = "0";
+            txtSelectedCourseName.Text = string.Empty;
+        }
+
+        private void ClearStudentSelections()
+        {
+            foreach (int index in lstStudents.CheckedIndices)
+            {
+                lstStudents.SetItemCheckState(index, CheckState.Unchecked);
+                lstStudents.ClearSelected();
+            }
+        }
+
+        private void btnResetCourseAssignmentsForm_Click(object sender, EventArgs e)
+        {
+            ResetCourseAssignmentForm();
+        }
+
+        private void btnResetStudentList_Click(object sender, EventArgs e)
+        {
+            ClearStudentSelections();
+        }
+
+        private void btnAssociate_Click(object sender, EventArgs e)
+        {
+            // verify at least one student
+            if (lstStudents.CheckedIndices.Count == 0)
+            {
+                MessageBox.Show("You must select at least one student.",
+                                           "Select a student",
+                                            MessageBoxButtons.OK,
+                                            MessageBoxIcon.Error);
+                return;
+            }
+            // verify a course is selected
+            if (string.IsNullOrWhiteSpace(lblSelectedCourseId.Text) || (Convert.ToInt32(lblSelectedCourseId.Text) == 0))
+            {
+                MessageBox.Show("You must select a course.",
+                                           "Select a course",
+                                            MessageBoxButtons.OK,
+                                            MessageBoxIcon.Error);
+                return;
+            }
+            // check do I want to associate
+            var students = lstStudents.CheckedItems.Cast<Student>().ToList();
+
+            // create a string that stores all selected student names concatenated
+            // i.e. Eric, Chris, Sally, ..., etc.
+
+            StringBuilder sb = new();
+            foreach (var s in students)
+            {
+                if (sb.Length > 0)
+                {
+                    sb.Append(", ");
+                }
+
+                sb.Append($"{s.FirstName} {s.LastName}");
+            }
+            var studentNames = sb.ToString();
+
+            // display the student(s) and course(s) I want to associate
+            var message = $"Are you sure you want to associate {studentNames} to {txtSelectedCourseName.Text}?";
+            var confirmAssociate = MessageBox.Show(message, "Yes/No", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (confirmAssociate == DialogResult.No)
+            {
+                var resetForm = MessageBox.Show("Reset form?", "Yes/No", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (resetForm == DialogResult.Yes)
+                {
+                    ResetCourseAssignmentForm();
+                }
+                return;
+            }
+
+            // if yes, add course enrollments to the student object
+            int courseId = Convert.ToInt32(lblSelectedCourseId.Text);
+            var courseTitle = txtSelectedCourseName.Text;
+
+            var success = AssociateStudentsToCourse(students, courseTitle, courseId);
+            if (success)
+            {
+                ResetCourseAssignmentForm();
+            }
+        }
+
+        private bool AssociateStudentsToCourse(List<Student> students, string courseTitle, int courseId)
+        {
+            bool modified = false;
+            // create database context
+            using (var context = new SchoolOfFineArtsDBContext(_optionsBuilder.Options))
+            {
+                // check is good course
+                var existingCourse = context.Courses.Include(x => x.CourseEnrollments).SingleOrDefault(t => t.Id == courseId);
+
+                //  if not message the user - bad course
+                if (existingCourse is null)
+                {
+                    MessageBox.Show("Course does not exist.");
+                    // bad course - return false
+                    return false;
+                }
+
+                // iterate the students
+                foreach (var student in students)
+                {
+                    // check to see if student is valid
+                    var existingStudent = context.Students.Include(x => x.CourseEnrollments).SingleOrDefault(s => s.Id == student.Id);
+
+                    // if not, message the user - bad student
+                    if (existingStudent is null)
+                    {
+                        MessageBox.Show($"{student.FriendlyName} does not exist.");
+                        // move to next student
+                        continue;
+                    }
+
+                    var courseExists = false;
+                    // Check if association exists
+                    foreach (var enrollment in existingStudent.CourseEnrollments)
+                    {
+                        if (enrollment.CourseId == existingCourse.Id)
+                        {
+                            MessageBox.Show($"{student.FriendlyName} is already associated with {courseTitle}");
+                            
+                            courseExists = true;
+                            break;
+                        }
+                    }
+                    if (courseExists)
+                    {
+                        continue;
+                    }
+
+                    // create association
+                    CourseEnrollment courseEnrollment = new();
+                    courseEnrollment.CourseId = courseId;
+                    courseEnrollment.StudentId = existingStudent.Id;
+
+                    /*courseEnrollment.Student = existingStudent;
+                    courseEnrollment.Course = existingCourse;*/
+
+                    existingStudent.CourseEnrollments.Add(courseEnrollment);
+                    //existingCourse.CourseEnrollments.Add(courseEnrollment);
+                    modified = true;
+                }
+                if (modified)
+                {
+                    // save changes
+                    MessageBox.Show("Successfully associated");
+                    context.SaveChanges();
+                }
+            }
+            return true;
+        } 
+    } 
 }
 
             

@@ -68,6 +68,16 @@
             this.btnRemoveCourse = new System.Windows.Forms.Button();
             this.btnLoadCourses = new System.Windows.Forms.Button();
             this.btnAddUpdateCourse = new System.Windows.Forms.Button();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.btnResetStudentList = new System.Windows.Forms.Button();
+            this.btnResetCourseAssignmentsForm = new System.Windows.Forms.Button();
+            this.lblSelectedCourseId = new System.Windows.Forms.Label();
+            this.btnAssociate = new System.Windows.Forms.Button();
+            this.label11 = new System.Windows.Forms.Label();
+            this.txtSelectedCourseName = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.dgvCourseAssignments = new System.Windows.Forms.DataGridView();
+            this.lstStudents = new System.Windows.Forms.CheckedListBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvResults)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -76,6 +86,8 @@
             this.panel1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCourses)).BeginInit();
+            this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCourseAssignments)).BeginInit();
             this.SuspendLayout();
             // 
             // dgvResults
@@ -114,6 +126,7 @@
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Location = new System.Drawing.Point(12, 30);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -494,11 +507,113 @@
             this.btnAddUpdateCourse.UseVisualStyleBackColor = true;
             this.btnAddUpdateCourse.Click += new System.EventHandler(this.btnAddUpdateCourse_Click);
             // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.btnResetStudentList);
+            this.tabPage3.Controls.Add(this.btnResetCourseAssignmentsForm);
+            this.tabPage3.Controls.Add(this.lblSelectedCourseId);
+            this.tabPage3.Controls.Add(this.btnAssociate);
+            this.tabPage3.Controls.Add(this.label11);
+            this.tabPage3.Controls.Add(this.txtSelectedCourseName);
+            this.tabPage3.Controls.Add(this.label10);
+            this.tabPage3.Controls.Add(this.dgvCourseAssignments);
+            this.tabPage3.Controls.Add(this.lstStudents);
+            this.tabPage3.Location = new System.Drawing.Point(4, 24);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(900, 430);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "StudentCourses";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // btnResetStudentList
+            // 
+            this.btnResetStudentList.Location = new System.Drawing.Point(20, 361);
+            this.btnResetStudentList.Name = "btnResetStudentList";
+            this.btnResetStudentList.Size = new System.Drawing.Size(120, 34);
+            this.btnResetStudentList.TabIndex = 9;
+            this.btnResetStudentList.Text = "Clear Student List";
+            this.btnResetStudentList.UseVisualStyleBackColor = true;
+            this.btnResetStudentList.Click += new System.EventHandler(this.btnResetStudentList_Click);
+            // 
+            // btnResetCourseAssignmentsForm
+            // 
+            this.btnResetCourseAssignmentsForm.Location = new System.Drawing.Point(482, 304);
+            this.btnResetCourseAssignmentsForm.Name = "btnResetCourseAssignmentsForm";
+            this.btnResetCourseAssignmentsForm.Size = new System.Drawing.Size(151, 41);
+            this.btnResetCourseAssignmentsForm.TabIndex = 8;
+            this.btnResetCourseAssignmentsForm.Text = "Reset Course Assignments Form";
+            this.btnResetCourseAssignmentsForm.UseVisualStyleBackColor = true;
+            this.btnResetCourseAssignmentsForm.Click += new System.EventHandler(this.btnResetCourseAssignmentsForm_Click);
+            // 
+            // lblSelectedCourseId
+            // 
+            this.lblSelectedCourseId.AutoSize = true;
+            this.lblSelectedCourseId.Location = new System.Drawing.Point(280, 300);
+            this.lblSelectedCourseId.Name = "lblSelectedCourseId";
+            this.lblSelectedCourseId.Size = new System.Drawing.Size(13, 15);
+            this.lblSelectedCourseId.TabIndex = 6;
+            this.lblSelectedCourseId.Text = "0";
+            // 
+            // btnAssociate
+            // 
+            this.btnAssociate.Location = new System.Drawing.Point(639, 305);
+            this.btnAssociate.Name = "btnAssociate";
+            this.btnAssociate.Size = new System.Drawing.Size(151, 40);
+            this.btnAssociate.TabIndex = 5;
+            this.btnAssociate.Text = "Associate Course to Students";
+            this.btnAssociate.UseVisualStyleBackColor = true;
+            this.btnAssociate.Click += new System.EventHandler(this.btnAssociate_Click);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(170, 300);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(104, 15);
+            this.label11.TabIndex = 4;
+            this.label11.Text = "Selected Course Id";
+            // 
+            // txtSelectedCourseName
+            // 
+            this.txtSelectedCourseName.Location = new System.Drawing.Point(280, 322);
+            this.txtSelectedCourseName.Name = "txtSelectedCourseName";
+            this.txtSelectedCourseName.Size = new System.Drawing.Size(173, 23);
+            this.txtSelectedCourseName.TabIndex = 3;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(183, 325);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(91, 15);
+            this.label10.TabIndex = 2;
+            this.label10.Text = "Selected Course";
+            // 
+            // dgvCourseAssignments
+            // 
+            this.dgvCourseAssignments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvCourseAssignments.Location = new System.Drawing.Point(156, 45);
+            this.dgvCourseAssignments.Name = "dgvCourseAssignments";
+            this.dgvCourseAssignments.RowTemplate.Height = 25;
+            this.dgvCourseAssignments.Size = new System.Drawing.Size(718, 240);
+            this.dgvCourseAssignments.TabIndex = 1;
+            this.dgvCourseAssignments.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCourseAssignments_CellClick);
+            // 
+            // lstStudents
+            // 
+            this.lstStudents.CheckOnClick = true;
+            this.lstStudents.FormattingEnabled = true;
+            this.lstStudents.Location = new System.Drawing.Point(20, 45);
+            this.lstStudents.Name = "lstStudents";
+            this.lstStudents.Size = new System.Drawing.Size(120, 310);
+            this.lstStudents.TabIndex = 0;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1001, 756);
+            this.ClientSize = new System.Drawing.Size(932, 504);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.btnLoadStudents);
             this.Controls.Add(this.btnLoadTeachers);
@@ -516,6 +631,9 @@
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCourses)).EndInit();
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCourseAssignments)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -561,5 +679,15 @@
         private Label label4;
         private Button btnResetCourseForm;
         private DataGridView dgvCourses;
+        private TabPage tabPage3;
+        private Button btnAssociate;
+        private Label label11;
+        private TextBox txtSelectedCourseName;
+        private Label label10;
+        private DataGridView dgvCourseAssignments;
+        private CheckedListBox lstStudents;
+        private Label lblSelectedCourseId;
+        private Button btnResetCourseAssignmentsForm;
+        private Button btnResetStudentList;
     }
 }
