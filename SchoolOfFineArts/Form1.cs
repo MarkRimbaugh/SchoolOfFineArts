@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using SchoolOfFineArtsDB;
 using SchoolOfFineArtsModels;
+using SchoolOfFineArtsModels.DTOs;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Text;
@@ -375,6 +376,7 @@ namespace SchoolOfFineArts
             LoadTeachers();
             ResetForm();
             ResetCourseForm();
+            LoadCourseInfoDTOs();
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
@@ -670,6 +672,7 @@ namespace SchoolOfFineArts
         {
             ResetCourseInfo();
             ClearStudentSelections();
+            LoadCourseInfoDTOs();
         }
 
         private void ResetCourseInfo()
@@ -829,7 +832,25 @@ namespace SchoolOfFineArts
                 }
             }
             return true;
-        } 
+        }
+
+        private void dgvCourseInfos_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            
+        }
+
+        public void LoadCourseInfoDTOs()
+        {
+            using (var context = new SchoolOfFineArtsDBContext(_optionsBuilder.Options))
+            {
+                var dbCourseInfoDTOs = new BindingList<CourseInfoDTO>(context.CourseInfoDTOs
+                    .FromSqlRaw("SELECT * FROM vwCourseInfo " +
+                    "            ORDER BY StudentName, CourseName")
+                    .ToList());
+                dgvCourseInfos.DataSource = dbCourseInfoDTOs;
+                dgvCourseInfos.Refresh();
+            }
+        }
     } 
 }
 
