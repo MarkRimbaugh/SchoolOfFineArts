@@ -679,7 +679,10 @@ namespace SchoolOfFineArts
         {
             dgvCourseAssignments.ClearSelection();
             lblCourseId.Text = "0";
+            lblSelectedCourseId.Text = "0";
             txtSelectedCourseName.Text = string.Empty;
+            lblSelectedStudentId.Text = "0";
+            txtSelectedStudentName.Text = string.Empty;
         }
 
         private void ClearStudentSelections()
@@ -802,7 +805,7 @@ namespace SchoolOfFineArts
                         if (enrollment.CourseId == existingCourse.Id)
                         {
                             MessageBox.Show($"{student.FriendlyName} is already associated with {courseTitle}");
-                            
+
                             courseExists = true;
                             break;
                         }
@@ -836,7 +839,66 @@ namespace SchoolOfFineArts
 
         private void dgvCourseInfos_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            
+            try
+            {
+                if (e.RowIndex < 0)
+                {
+                    MessageBox.Show("Bad row clicked");
+                    ResetCourseInfoGrid();
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Bad row clicked");
+                return;
+            }
+
+            var theRow = dgvCourseInfos.Rows[e.RowIndex];
+            int dataId = 0;
+
+            foreach (DataGridViewTextBoxCell cell in theRow.Cells)
+            {
+                if (cell.OwningColumn.Name.Equals("CourseId", StringComparison.OrdinalIgnoreCase))
+                {
+                    dataId = (int)cell.Value;
+                    if (dataId == 0)
+                    {
+                        MessageBox.Show("Bad row clicked");
+                        ResetForm();
+                        return;
+                    }
+                    lblSelectedCourseId.Text = $"{dataId}";
+
+
+                }
+                if (cell.OwningColumn.Name.Equals("CourseName", StringComparison.OrdinalIgnoreCase))
+                {
+                    txtSelectedCourseName.Text = $"{cell.Value}";
+                }
+                if (cell.OwningColumn.Name.Equals("StudentId", StringComparison.OrdinalIgnoreCase))
+                {
+                    dataId = (int)cell.Value;
+                    if (dataId == 0)
+                    {
+                        MessageBox.Show("Bad row clicked");
+                        ResetForm();
+                        return;
+                    }
+                    lblSelectedStudentId.Text = $"{dataId}";
+
+
+                }
+                if (cell.OwningColumn.Name.Equals("StudentName", StringComparison.OrdinalIgnoreCase))
+                {
+                    txtSelectedStudentName.Text = $"{cell.Value}";
+                }
+            }
+        }
+
+        private void ResetCourseInfoGrid()
+        {
+            dgvCourseInfos.ClearSelection();
         }
 
         public void LoadCourseInfoDTOs()
@@ -851,7 +913,92 @@ namespace SchoolOfFineArts
                 dgvCourseInfos.Refresh();
             }
         }
-    } 
+
+        private void btnRemoveStudentsFromCourse_Click(object sender, EventArgs e)
+        {
+            if (lblSelectedStudentId.Text == "0")
+            {
+                MessageBox.Show("Must select at least one student");
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(lblSelectedStudentId.Text) || Convert.ToInt32(lblSelectedStudentId.Text) == 0)
+            {
+                MessageBox.Show("Must select at least one course");
+                return;
+            }
+
+            // confirm delete
+            var confirmDelete = MessageBox.Show("Are you sure you want to disenroll this student?"
+                , "Are you sure?"
+                , MessageBoxButtons.YesNo);
+            if (confirmDelete == DialogResult.No)
+            {
+                // if not, reset the form
+                ResetCourseAssignmentForm();
+                return;
+            }
+
+            // if yes, disenroll student
+            var studentId = Convert.ToInt32(lblSelectedStudentId.Text);
+            var courseId = Convert.ToInt32(lblSelectedCourseId.Text);
+            bool success = RemoveStudentFromCourseEnrollment(studentId, courseId);
+
+            if (success)
+            {
+                LoadCourseInfoDTOs();
+                ResetCourseAssignmentForm();
+            }
+
+            ResetCourseInfoGrid();
+        }
+
+        private bool RemoveStudentFromCourseEnrollment(int studentId, int courseId)
+        {
+            string studentName = txtSelectedStudentName.Text;
+            string courseName = txtSelectedCourseName.Text;
+            // create database context
+            using (var context = new SchoolOfFineArtsDBContext(_optionsBuilder.Options))
+            {
+                // check is good course and student
+                var existingCourse = context.Courses.Include(x => x.CourseEnrollments).SingleOrDefault(t => t.Id == courseId);
+                if (existingCourse == null)
+                {
+                    MessageBox.Show($"{studentName} is not associated with {courseName}", "Does not exist", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+                var existingStudent = context.Students.Include(x => x.CourseEnrollments).SingleOrDefault(s => s.Id == studentId);
+                if (existingStudent == null)
+                {
+                    MessageBox.Show($"{studentName} is not associated with {courseName}.", "Does not exist", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+
+                var enrollmentToDelete = new CourseEnrollment();
+                foreach (var enrollment in existingStudent.CourseEnrollments)
+                {
+                    if(enrollment.CourseId == courseId)
+                    {
+                        enrollmentToDelete = enrollment;
+                        break;
+                    }
+                }
+                if (enrollmentToDelete.Id > 0 && enrollmentToDelete.StudentId == studentId && enrollmentToDelete.CourseId == courseId)
+                {
+                    existingStudent.CourseEnrollments.Remove(enrollmentToDelete);
+                    context.SaveChanges();
+                    MessageBox.Show($"Removed {studentName} from {courseName}");
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private void bnClearCourseInfoGridSelections_Click(object sender, EventArgs e)
+        {
+            dgvCourseInfos.ClearSelection();
+            ResetCourseAssignmentForm();
+        }
+    }
 }
 
             
