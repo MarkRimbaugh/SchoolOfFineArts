@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using SchoolOfFineArtsModels;
+using SchoolOfFineArtsModels.DTOs;
 
 namespace SchoolOfFineArtsDB
 {
@@ -9,6 +10,7 @@ namespace SchoolOfFineArtsDB
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Course> Courses { get; set; }
+        public DbSet<CourseInfoDTO> CourseInfoDTOs { get; set; }
 
         public SchoolOfFineArtsDBContext() { }
 
@@ -56,6 +58,12 @@ namespace SchoolOfFineArtsDB
                     new Student() { Id = 4, FirstName = "Alex", LastName = "Robinson", DateOfBirth = seedDate },
                     new Student() { Id = 5, FirstName = "Mark", LastName = "Rimbaugh", DateOfBirth = seedDate }
                 );
+            });
+
+            modelBuilder.Entity<CourseInfoDTO>(x => 
+            {
+                x.HasNoKey();
+                x.ToView("CourseInfoDTOs");
             });
         }
     }

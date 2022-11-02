@@ -55,7 +55,7 @@ namespace SchoolOfFineArtsDB.Migrations
 
                     b.HasIndex("TeacherId");
 
-                    b.ToTable("Courses");
+                    b.ToTable("Courses", (string)null);
                 });
 
             modelBuilder.Entity("SchoolOfFineArtsModels.CourseEnrollment", b =>
@@ -79,7 +79,7 @@ namespace SchoolOfFineArtsDB.Migrations
                     b.HasIndex("StudentId", "CourseId")
                         .IsUnique();
 
-                    b.ToTable("CourseEnrollment");
+                    b.ToTable("CourseEnrollment", (string)null);
                 });
 
             modelBuilder.Entity("SchoolOfFineArtsModels.Student", b =>
@@ -105,7 +105,7 @@ namespace SchoolOfFineArtsDB.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Students");
+                    b.ToTable("Students", (string)null);
 
                     b.HasData(
                         new
@@ -168,7 +168,7 @@ namespace SchoolOfFineArtsDB.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Teachers");
+                    b.ToTable("Teachers", (string)null);
 
                     b.HasData(
                         new
